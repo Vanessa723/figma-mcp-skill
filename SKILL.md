@@ -9,17 +9,71 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 
 在通过 **Figma MCP** 生成或修改设计稿、且需符合 **IDS** 与业务配置时启用本技能。不适用：Figma 插件、Figma Make / Stitch 等内置 AI 设计工具。
 
+---
+
+## Quick Start Card | 快速启动
+
+**Read this before loading any other file.**
+
+### Core Rules (always apply)
+1. **100% token coverage** — no bare hex values, raw font sizes, or unitless shadows anywhere
+2. **Standard controls from IDS UI Kit** — never hand-draw Button / Input / Select / Table / Modal / Tag / Checkbox / Radio / Switch / Tabs / Pagination
+3. **One screen per generation by default** — additional screens/states only when explicitly requested
+
+### Most-Used Tokens
+| Use | Token |
+|-----|-------|
+| Primary text | `Text/Primary` |
+| Secondary text | `Text/Secondary` / `Character/Secondary .45` |
+| Page bg | `Gray/gray-1` |
+| Card / white | `Gray/White` |
+| Brand blue | `Primary (Infra Blue)/6` |
+| Error | `Dust Red/6` |
+| Warning | `Sunset Orange/6` |
+| Success | `Polar Green/2` |
+| Disabled | `Neutral/5` |
+| AI bg | `AI/5/BgPrimary` |
+| Body text style | `Text Base/Normal` |
+| Heading | `Heading/1` – `Heading/5` |
+| Card shadow | `boxShadow` |
+
+### Modes (always confirm before generating)
+- **Guided Mode** — Product with a business config (Space / DataSuite / Ask / Smart). Apply its Design Language + use Biz Components where they naturally fit. Layout decisions are creative and open.
+- **Open Mode** — No product config, or the user wants IDS foundation only. Full creative freedom; IDS tokens + base components as the floor.
+
+**Always ask one question:** *"Guided Mode ([product]) or Open Mode?"* — Never auto-enter either mode.
+
+---
+
 ## 第一步：读完整规范
 
-**必须先阅读**同目录下的 [figma-ids-design.md](figma-ids-design.md)（正文为完整生成规范）。该文件顶部的 YAML 仅供历史兼容；**技能发现以本 `SKILL.md` 的 frontmatter 为准**。
+**必须先阅读**同目录下的 [figma-ids-design.md](figma-ids-design.md)（完整工作流程：Pre-flight、模式确认、生成步骤、编辑流程、交付）。
+
+## 输入类型处理 | Input Detection
+
+自动检测用户提供的输入类型，无需询问——直接选择对应处理方式：
+
+| 用户提供 | 如何处理 |
+|---------|---------|
+| 文字描述（需求/功能） | 从零生成；推断产品后询问模式 |
+| Figma URL | 编辑已有文件；先读取当前内容再操作（见 figma-ids-design.md Edit 流程） |
+| 截图 / 图片 | 分析视觉语言与布局结构，在 Figma 中复现并应用 IDS tokens |
+| PRD / Confluence 链接 | 提取关键需求后生成对应页面 |
+| 代码文件（HTML / JSX / TSX） | 分析组件结构与交互逻辑，反向还原为 IDS 规范的 Figma 设计稿 |
+| 以上类型组合 | 综合使用——代码/描述用于结构分析，截图/URL 用于视觉参考 |
+| 仅有模糊概念 | 询问：*"Can you share a screenshot, Figma URL, or describe the page/feature in more detail?"* |
 
 ## 本目录资产（相对路径）
 
 | 路径 | 用途 |
 |------|------|
-| [figma-ids-design.md](figma-ids-design.md) | 生成前检查、通用规则、业务章节、交付清单、Token 速查 |
-| [components-index.json](components-index.json) | 按组件集名称索引的 variant → key，减少 API 查询 |
-| [business-configs/](business-configs/) | 各产品线配置（标准模式时加载对应 `[product].md`） |
+| [figma-ids-design.md](figma-ids-design.md) | 主工作流：Pre-flight、模式确认、两阶段生成、编辑流程、交付 |
+| [specs/canvas-layout.md](specs/canvas-layout.md) | 画布规格、Auto Layout、响应式策略、图层命名、标注帧 |
+| [specs/token-system.md](specs/token-system.md) | 完整 Token 速查表（Quick Start 卡未覆盖的 token 在此查） |
+| [specs/component-rules.md](specs/component-rules.md) | 组件来源、图标规范、状态完整性、内容真实性 |
+| [specs/delivery-checklist.md](specs/delivery-checklist.md) | 交付清单（分级检查项）、交付摘要输出格式 |
+| [components-index.json](components-index.json) | 组件 variant → key 索引（按需搜索，勿全量加载） |
+| [business-configs/](business-configs/) | 各产品线配置（Guided Mode 时加载对应 `[product].md`） |
 | [fetch-components.sh](fetch-components.sh) | 刷新组件索引（需 `FIGMA_TOKEN`） |
 | [README.md](README.md) | 仓库说明、MCP 安装示例、环境变量 |
 
@@ -27,22 +81,17 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 
 1. 配置 **Figma MCP**（Personal Access Token，读写权限）。具体写法见 [README.md](README.md)；Cursor 侧以编辑器 MCP 文档为准。
 2. 调用 MCP 工具前**查看当前环境提供的工具 schema**（参数名以实际 MCP 为准）。
-3. 规范中涉及的 **Figma REST 示例**（如拉取 styles）仍按 [figma-ids-design.md](figma-ids-design.md) 执行；与 MCP 能力互补时使用 MCP 优先、REST 补全。
+3. Figma REST 调用（如刷新 tokens）以 [figma-ids-design.md](figma-ids-design.md) 中的命令为准；MCP 优先，REST 补全。
 
 ## 执行顺序（摘要）
 
-完整步骤与禁止项以 [figma-ids-design.md](figma-ids-design.md) 为准；此处仅作索引：
+完整步骤以 [figma-ids-design.md](figma-ids-design.md) 为准；此处仅作快速索引：
 
-1. **Pre-flight**：拉取最新 tokens、加载 `components-index.json`、确认产品与模式、确认文件创建组织与位置。
-2. **询问两个问题确认模式**（见 1.2 节）：
-   - 探索模式（Explore）：任意产品 + 方向探索阶段 → 约束最小，创意优先，输出标注"Exploration Draft"
-   - 标准模式（Standard）：成熟产品 + 准备交付 → 严格 IDS + 加载 `business-configs/[product].md`
-   - 创意模式（Creative）：新产品 + 准备交付 → IDS 组件优先使用，新组件自由创建并注释
-3. **交付**（标准 / 创意模式）：画布尺寸、Auto Layout、全 Token、英文真实文案、状态齐全、Annotation 帧、清单自检。
+1. **Pre-flight**：从 Quick Start 卡读 Token，按需搜索 components-index.json，询问 Product / IDS 模式。
+2. **生成**：Phase 1 先以文字/ASCII 描述结构，等用户确认；Phase 2 再执行 MCP 操作，按需读取 specs 文件。
+3. **交付**：运行 [specs/delivery-checklist.md](specs/delivery-checklist.md) 自检；Annotation 帧延迟到用户确认后再生成。
 
 ## 更新本技能内容
-
-本目录为 Git 克隆时，可在终端执行：
 
 ```bash
 git -C ~/.cursor/skills/figma-mcp-skill pull
