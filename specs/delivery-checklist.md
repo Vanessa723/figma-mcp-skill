@@ -35,7 +35,6 @@ Run this checklist before considering the design complete. Each item is marked w
 ## Layout
 
 - [ ] **[Must]** Primary frame: 1728 × 1117 px
-- [ ] **[Should]** Secondary frame: 1440 × 900 px (for core workflow pages)
 - [ ] **[Must]** All frames and groups use Auto Layout
 - [ ] **[Must]** Layer names are semantic (no "Frame 12", "Rectangle")
 
@@ -43,9 +42,6 @@ Run this checklist before considering the design complete. Each item is marked w
 
 - [ ] **[Must]** File is created under SHOPEE SINGAPORE PRIVATE LIMITED organization
 - [ ] **[Must]** File is NOT created inside the IDS design system file (zANozorPV3t5sueU20e0Nx)
-- [ ] **[Should]** Guided Mode: Annotation frame present (generated after user confirms main frame)
-- [ ] **[Optional]** Open Mode: Annotation frame optional — generate only if requested
-- [ ] **[Should]** Token names documented in annotations
 - [ ] **[Must]** Any custom components flagged as "Custom — not in IDS"
 
 ---
@@ -61,14 +57,13 @@ Quality tally:
   Components   ✓ IDS sourced | X custom (annotated)
   Tokens       ✓ 100% coverage | or: ⚠ N bare values found
   States       ✓ All states present | or: ⚠ Missing: [list]
-  Layout       ✓ 1728px primary | ✓/⚠ 1440px variant
-  Handoff      ✓ Org correct | ✓ Annotation frame present
+  Layout       ✓ 1728px primary | ✓ Auto Layout applied
+  Handoff      ✓ Org correct | ✓ Custom components flagged
 
 Next steps — pick one:
   1. "Run token audit" — verify all token coverage in detail
-  2. "Generate 1440 variant" — create responsive secondary canvas
-  3. "Add interaction states" — fill in Hover / Disabled / Loading states
-  4. "Run UX evaluation" — evaluate the design against Nielsen's heuristics
+  2. "Add interaction states" — fill in Hover / Disabled / Loading states
+  3. "Run UX evaluation" — evaluate the design against Nielsen's heuristics
 ```
 
 > If any **[Must]** item is unchecked, **do not deliver** — fix it first and note it to the user.

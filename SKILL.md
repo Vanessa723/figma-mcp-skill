@@ -68,7 +68,7 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 | 路径 | 用途 |
 |------|------|
 | [figma-ids-design.md](figma-ids-design.md) | 主工作流：Pre-flight、模式确认、两阶段生成、编辑流程、交付 |
-| [specs/canvas-layout.md](specs/canvas-layout.md) | 画布规格、Auto Layout、响应式策略、图层命名、标注帧 |
+| [specs/canvas-layout.md](specs/canvas-layout.md) | 画布规格、Auto Layout、图层命名 |
 | [specs/token-system.md](specs/token-system.md) | 完整 Token 速查表（Quick Start 卡未覆盖的 token 在此查） |
 | [specs/component-rules.md](specs/component-rules.md) | 组件来源、图标规范、状态完整性、内容真实性 |
 | [specs/delivery-checklist.md](specs/delivery-checklist.md) | 交付清单（分级检查项）、交付摘要输出格式 |
@@ -89,7 +89,7 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 
 1. **Pre-flight**：从 Quick Start 卡读 Token，按需搜索 components-index.json，询问 Product / IDS 模式。
 2. **生成**：Phase 1 先以文字/ASCII 描述结构，等用户确认；Phase 2 再执行 MCP 操作，按需读取 specs 文件。
-3. **交付**：运行 [specs/delivery-checklist.md](specs/delivery-checklist.md) 自检；Annotation 帧延迟到用户确认后再生成。
+3. **交付**：运行 [specs/delivery-checklist.md](specs/delivery-checklist.md) 自检，输出结构化摘要与 Next Steps。
 
 ## 更新本技能内容
 
