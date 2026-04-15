@@ -25,6 +25,32 @@ Reference this file when setting up frames, applying Auto Layout, or delivering 
 
 ---
 
+## Frame Nesting & Page Structure | 帧嵌套与页面结构
+
+Navigation structure, frame nesting, and ContentArea spacing **vary by product**. Different products use different navigation shells (e.g., topbar + sidebar, sidebar-only, or other layouts).
+
+**In Guided Mode, always read the product's business config** (`business-configs/[product].md`) before creating any frames. The business config defines:
+
+- Navigation shell structure (which navigation elements exist and how they're arranged)
+- Which elements are navigation-level vs content-level
+- ContentArea padding and gap between modules
+- How PageHeader relates to other elements structurally
+
+**In Open Mode**, choose a navigation structure that fits the use case, using IDS components where available.
+
+Generic layer hierarchy principle:
+```
+[PageName]
+  ├── [Navigation elements]     ← defined by business config
+  ├── [Page identity elements]  ← e.g. PageHeader — nesting depends on product
+  └── ContentArea
+        ├── [Module A]
+        ├── [Module B]
+        └── ...
+```
+
+---
+
 ## Layer Naming Convention | 图层命名规范
 
 每个图层必须使用语义化命名，镜像代码组件结构。
@@ -32,20 +58,9 @@ Reference this file when setting up frames, applying Auto Layout, or delivering 
 Every layer must have a semantic name that mirrors code component structure:
 
 ```
-✓  Topbar / Sidebar / PageHeader / ContentArea / FilterBar / DataTable / ActionBar / EmptyState
+✓  PageHeader / ContentArea / FilterBar / DataTable / ActionBar / EmptyState / Navigation / Sidebar
 ✗  Frame 12 / Group 3 / Rectangle / Component 47
 ```
 
-Layer hierarchy template:
-```
-[PageName]
-  ├── Topbar
-  ├── Sidebar
-  ├── PageHeader
-  └── ContentArea
-        ├── [SectionName]
-        │     ├── [ComponentName]
-        │     └── ...
-        └── ...
-```
+> These are examples of semantic names, not a required set. The actual elements depend on the product's navigation structure.
 

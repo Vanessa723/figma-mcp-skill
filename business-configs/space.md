@@ -30,22 +30,36 @@
 
 ### 1. The Navigation Shell
 
-Every Space page lives inside a fixed shell: a 48px top bar + a collapsible side navigation. These two pieces establish where the user is in the product universe.
+Every Space page lives inside a fixed shell with **three** navigation-level elements: a top bar, a side navigation, and a page header. These three pieces establish where the user is in the product universe — they are all structurally at the same frame level (direct children of the page frame), never nested inside ContentArea.
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                        Topbar                                 │  Fixed 48px
+│                        Topbar                                 │  Fixed, full width
 ├──────────────┬───────────────────────────────────────────────┤
-│              │              Page Header                        │
+│              │              Page Header                        │  Navigation-level (NOT inside ContentArea)
 │   Sidebar    ├───────────────────────────────────────────────┤
 │  240px / 64px│                                                │
-│  collapsed   │            Content Area                        │
+│  collapsed   │            Content Area                        │  Content-level (QueryFilter, Table, etc.)
 │              │                                                │
 └──────────────┴───────────────────────────────────────────────┘
 ```
 
+**Frame nesting rule (critical):**
+```
+PageFrame
+  ├── Topbar          ← navigation-level
+  ├── Sidebar         ← navigation-level
+  ├── PageHeader      ← navigation-level (sibling of ContentArea, NOT its child)
+  └── ContentArea     ← content-level
+        ├── QueryFilter
+        ├── FullTable / FormSection / ...
+        └── ...
+```
+
+> **Common mistake:** Putting PageHeader inside ContentArea. PageHeader belongs to the navigation system — it identifies "where am I" just like the Topbar and Sidebar do. Nesting it inside ContentArea incorrectly treats page identity as scrollable content.
+
 **Top bar (Topbar)**
-- Always 48px, fixed, spans full width
+- Fixed, spans full width
 - Left: global menu toggle + product logo/title
 - Center: platform-wide search
 - Right: notification, user identity, settings icons
@@ -59,7 +73,19 @@ Every Space page lives inside a fixed shell: a 48px top bar + a collapsible side
 - The active item is highlighted with brand blue. Parent items of the active item show as partially highlighted.
 - Content area never overlaps the sidebar — they sit side by side.
 
-**Design principle:** The sidebar tells users "what product am I in, and where inside it." The top bar tells users "who am I, and what platform is this." Keep these roles distinct — never put page-level actions in the top bar, and never put global identity in the sidebar.
+**Page Header**
+- Positioned directly below the Topbar, to the right of the Sidebar — at the same frame level as both
+- Width = page width − sidebar width
+- Its job is to answer: *Where am I? What am I looking at? What can I do?* (see Section 2 for details)
+- **Never** place PageHeader inside ContentArea
+
+**Content Area**
+- Positioned below PageHeader, to the right of the Sidebar
+- Auto Layout: vertical, **24px padding all sides**, **16px gap** between child modules
+- Children (QueryFilter, FullTable, FormSection, etc.) use `layoutSizingHorizontal = FILL`
+- The last child typically uses `layoutSizingVertical = FILL` to expand into remaining space
+
+**Design principle:** The sidebar tells users "what product am I in, and where inside it." The top bar tells users "who am I, and what platform is this." The page header tells users "what page am I on and what can I do here." Keep these roles distinct — all three are navigation-level elements that frame the content below.
 
 ---
 

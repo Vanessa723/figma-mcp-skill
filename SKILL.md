@@ -110,7 +110,8 @@ For frequent request types, use the matching Phase 1 skeleton directly — no ne
 ```
 Proposed structure — [Page Name]:
 
-Layout:  Page Header (title + primary action) → Filter Bar → Table → Pagination
+Layout:  Page Header → Filter Bar → Table → Pagination
+         (Consult business config for frame nesting and spacing rules)
 Key components:
   - IDS Table with [N] columns: [col names]
   - IDS Input + Select for filters
@@ -128,6 +129,7 @@ States this pass: Default populated view
 Proposed structure — [Page Name]:
 
 Layout:  Page Header → Form Sections (grouped by topic) → Footer Actions (Save / Cancel)
+         (Consult business config for frame nesting and spacing rules)
 Key components:
   - IDS Input, Select, Switch, Radio for fields
   - IDS Button (Primary + Default) for footer
@@ -143,7 +145,8 @@ States this pass: Empty form (default) + Validation error state
 ```
 Proposed structure — [Page Name]:
 
-Layout:  Stats Row (3-4 metric cards) → [Chart Zone / Activity Feed / Detail Panel]
+Layout:  Page Header → Stats Row (3-4 metric cards) → [Chart Zone / Activity Feed / Detail Panel]
+         (Consult business config for frame nesting and spacing rules)
 Key components:
   - IDS Card for metric tiles
   - Chart placeholder frames (annotated with chart type)

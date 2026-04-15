@@ -215,7 +215,7 @@ Before making any Figma MCP calls, describe the proposed design in the conversat
 Proposed structure for [Page Name]:
 
 Layout:
-  [Brief description of zones — e.g., Sidebar (240px) + Content Area]
+  [Navigation structure — from business config or user description]
   [Page Header type and what it contains]
   [Primary content pattern — table / form / dashboard / etc.]
 
@@ -238,6 +238,10 @@ Wait for user confirmation before executing any MCP calls. This step takes 30–
 ### 阶段二：在 Figma 中执行（实际操作）
 
 After confirmation, execute the design using Figma MCP. Load spec files as needed during this phase — not before.
+
+**Frame nesting — consult business config:**
+
+In Guided Mode, the product's business config defines the navigation shell structure, frame nesting, and ContentArea spacing. Read the business config **before** creating frames — different products use different navigation structures (e.g., topbar + sidebar, sidebar-only, or other layouts).
 
 **Spec loading — on demand only:**
 
