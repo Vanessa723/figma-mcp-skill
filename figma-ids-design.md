@@ -268,6 +268,45 @@ Each business config has four layers — read all before generating:
 
 ---
 
+### Phase 2.5: Visual Validation (Self-Correction Loop)
+### 阶段二·五：视觉验证（自我修正循环）
+
+After all Phase 2 MCP calls complete, take a screenshot and inspect it before proceeding to delivery. This step catches the most common silent failures — issues that look correct in code but are visually broken.
+
+**Step 1 — Screenshot the generated frame**
+
+Call `get_screenshot` on the primary frame node ID returned from Phase 2. If the frame is large, also screenshot individual sections by node ID — full-page screenshots at reduced resolution hide detail-level issues.
+
+**Step 2 — Check against this failure list**
+
+Inspect the screenshot(s) for every item:
+
+| What to look for | Common cause | Self-fix |
+|-----------------|-------------|---------|
+| Text cut off / descenders clipped | Frame height too tight, HUG not set | Resize frame to HUG contents |
+| "Title" / "Heading" / "Button" / "Label" still showing | Component text properties not overridden | Call `setProperties()` with correct copy |
+| Elements overlapping | Missing Auto Layout or wrong sizing mode | Re-apply Auto Layout, set FILL/HUG correctly |
+| Blank / empty zones | Frame created but children not appended | Verify `appendChild()` completed successfully |
+| Obvious color mismatch (e.g. solid black where brand blue expected) | Variable binding failed silently | Re-bind with `setBoundVariableForPaint` |
+| Layer named "Frame 12" / "Group 3" / "Rectangle" | Forgot to set `.name` | Rename nodes directly |
+
+**Step 3 — Fix, then re-screenshot**
+
+For each issue found:
+1. Apply a targeted fix in a single `use_figma` call — do not rebuild the whole screen
+2. Take a new screenshot of only the affected section to confirm the fix
+3. Repeat until no issues remain from the list above
+
+**Step 4 — Note what cannot be auto-fixed**
+
+If a visual issue exists but cannot be reliably fixed without user input (e.g., missing icon asset, ambiguous layout intent), note it explicitly in the delivery summary under ⚠ `Visual issues requiring attention`.
+
+**When to skip Phase 2.5:**
+- The user's explicit request was a small targeted edit (e.g., "change this button's label") — skip, the change is too narrow to warrant a full visual scan
+- The MCP environment does not support `get_screenshot` — skip and note it in the delivery summary
+
+---
+
 ## Editing Existing Files
 ## 编辑已有 Figma 文件
 

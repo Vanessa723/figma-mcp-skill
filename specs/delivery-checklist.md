@@ -32,6 +32,14 @@ Run this checklist before considering the design complete. Each item is marked w
 - [ ] **[Should]** Open Mode: Default state + 1-2 key states sufficient
 - [ ] **[Should]** Data regions have Loading skeleton + Empty state + Error state (Guided Mode required; Open Mode optional)
 
+## Visual Validation
+
+- [ ] **[Must]** Screenshot taken of generated frame after Phase 2 — not skipped without justification
+- [ ] **[Must]** No text clipping or descender cutoff visible in any text node
+- [ ] **[Must]** No placeholder copy remaining ("Title", "Heading", "Button", "Label", "Lorem")
+- [ ] **[Should]** No overlapping elements or blank zones due to Auto Layout issues
+- [ ] **[Should]** All layer names are semantic — no "Frame N", "Group N", or "Rectangle" remaining
+
 ## Layout
 
 - [ ] **[Must]** Primary frame: 1728 × 1117 px
@@ -57,6 +65,7 @@ Quality tally:
   Components   ✓ IDS sourced | X custom (annotated)
   Tokens       ✓ 100% coverage | or: ⚠ N bare values found
   States       ✓ All states present | or: ⚠ Missing: [list]
+  Visual       ✓ Screenshot validated, N issues fixed | or: ⚠ Issues requiring attention: [list]
   Layout       ✓ 1728px primary | ✓ Auto Layout applied
   Handoff      ✓ Org correct | ✓ Custom components flagged
 
