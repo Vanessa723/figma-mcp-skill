@@ -43,6 +43,22 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 
 **Always ask one question:** *"Guided Mode ([product]) or Open Mode?"* — Never auto-enter either mode.
 
+### Forbidden Patterns | 绝对禁止
+
+These are hard stops — violating any of these immediately invalidates the delivery:
+
+- ❌ Bare hex values, raw font sizes, or unitless shadows — always use IDS tokens
+- ❌ Hand-drawing Button / Input / Select / Table / Modal / Tag / Checkbox / Radio / Switch / Tabs / Pagination
+- ❌ External icon libraries (Material, Heroicons, Feather, etc.) — IDS icons only, 12/16/20/24px
+- ❌ Lorem ipsum or placeholder text — real product copy only
+- ❌ Chinese characters in any UI element or layer name
+- ❌ Detaching IDS components unless the user explicitly says "detach"
+- ❌ Using underscore-prefixed components (`_ComponentName`) — internal base only
+- ❌ Creating Figma files outside **SHOPEE SINGAPORE PRIVATE LIMITED** organization
+- ❌ Writing into the IDS design system file (`zANozorPV3t5sueU20e0Nx`) — read-only library
+- ❌ Generating more than one screen without explicit user confirmation
+- ❌ Skipping Phase 1 structure preview (except for small targeted edits the user specifies)
+
 ---
 
 ## 第一步：读完整规范
@@ -82,6 +98,83 @@ description: Generates and edits Figma UI using IDS (Infra Design System) tokens
 1. 配置 **Figma MCP**（Personal Access Token，读写权限）。具体写法见 [README.md](README.md)；Cursor 侧以编辑器 MCP 文档为准。
 2. 调用 MCP 工具前**查看当前环境提供的工具 schema**（参数名以实际 MCP 为准）。
 3. Figma REST 调用（如刷新 tokens）以 [figma-ids-design.md](figma-ids-design.md) 中的命令为准；MCP 优先，REST 补全。
+
+## Common Patterns | 常见请求模板
+
+For frequent request types, use the matching Phase 1 skeleton directly — no need to invent structure from scratch.
+
+### 列表 / 数据管理页 (List & Data Management)
+
+**Trigger:** "create a [X] management page", "list of [resources]", "data table for [entity]"
+
+```
+Proposed structure — [Page Name]:
+
+Layout:  Page Header (title + primary action) → Filter Bar → Table → Pagination
+Key components:
+  - IDS Table with [N] columns: [col names]
+  - IDS Input + Select for filters
+  - IDS Button (Primary) for main action
+  - IDS Pagination at bottom
+
+States this pass: Default populated view
+```
+
+### 表单 / 配置页 (Form & Settings)
+
+**Trigger:** "create / edit form", "settings page", "configuration panel"
+
+```
+Proposed structure — [Page Name]:
+
+Layout:  Page Header → Form Sections (grouped by topic) → Footer Actions (Save / Cancel)
+Key components:
+  - IDS Input, Select, Switch, Radio for fields
+  - IDS Button (Primary + Default) for footer
+  - Section dividers with Heading/4 labels
+
+States this pass: Empty form (default) + Validation error state
+```
+
+### Dashboard / 概览页 (Dashboard)
+
+**Trigger:** "dashboard", "overview page", "home page", "summary"
+
+```
+Proposed structure — [Page Name]:
+
+Layout:  Stats Row (3-4 metric cards) → [Chart Zone / Activity Feed / Detail Panel]
+Key components:
+  - IDS Card for metric tiles
+  - Chart placeholder frames (annotated with chart type)
+  - IDS Table or List for activity/detail
+
+States this pass: Populated view
+```
+
+### 空状态 / 引导页 (Empty State / Onboarding)
+
+**Trigger:** "empty state", "zero state", "onboarding", "getting started"
+
+```
+Proposed structure — [Page Name]:
+
+Layout:  Centered zone — Illustration placeholder → Headline → Body copy → CTA button
+Key components:
+  - IDS Button (Primary) for main CTA
+  - IDS Button (Default) for secondary action (optional)
+
+States this pass: Empty state only
+```
+
+### 在已有页面添加元素 (Add to Existing)
+
+**Trigger:** user provides a Figma URL + "add [X]", "insert [X]", "put [X] in"
+
+Skip Phase 1 structure preview. Go directly to Edit flow (E1 → E2 → E3 in figma-ids-design.md):
+read the existing file → identify the target location → add only the requested element.
+
+---
 
 ## 执行顺序（摘要）
 

@@ -149,6 +149,24 @@ Biz Components are your vocabulary — not your sentences. The Design Language i
 - No Biz Component requirements
 - Layout: fully open — go bold on structure, hierarchy, and visual rhythm
 
+#### Visual Direction Archetypes | 视觉方向原型
+
+When the user has not specified a visual style, offer one of these three starting points before generating. Each one shifts density, spacing, and hierarchy in a distinct direction.
+
+| Archetype | Best for | Density | Signature traits |
+|-----------|----------|---------|-----------------|
+| **Compact / Data-Dense** | Data management, resource lists, admin tools | High | Tight row height, multi-column layout, filter-heavy toolbar, small body text |
+| **Editorial / Spacious** | Content display, config centers, documentation UIs | Low | Large headings, wide padding, section dividers, generous whitespace between groups |
+| **Command-Center / Action-Hub** | Dashboards, workbenches, home pages | Medium | Metric card grid, prominent CTA zone, mixed chart + table layout, quick-action shortcuts |
+
+**After the user confirms Open Mode, ask exactly one follow-up:**
+
+> *"Any visual direction preference? I can go **Compact** (data-dense, tight layout), **Editorial** (spacious, content-focused), or **Command-Center** (dashboard, action-oriented). Or just describe the vibe and I'll match it."*
+
+If the user has already described the layout clearly, skip this question and infer the archetype from context.
+
+---
+
 **Delivery:** Default state + 1-2 key states sufficient.
 
 **告知用户:**
