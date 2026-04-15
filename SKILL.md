@@ -185,7 +185,8 @@ read the existing file → identify the target location → add only the request
 
 1. **Pre-flight**：从 Quick Start 卡读 Token，按需搜索 components-index.json，询问 Product / IDS 模式。
 2. **生成**：Phase 1 先以文字/ASCII 描述结构，等用户确认；Phase 2 再执行 MCP 操作，按需读取 specs 文件。
-3. **交付**：运行 [specs/delivery-checklist.md](specs/delivery-checklist.md) 自检，输出结构化摘要与 Next Steps。
+3. **设计说明**（多页面项目）：全部页面完成后，主动询问是否在 Figma 中生成 Design Rationale 页——记录产品背景、设计决策与用户旅程（见 Phase 2.9）。
+4. **交付**：运行 [specs/delivery-checklist.md](specs/delivery-checklist.md) 自检，输出结构化摘要与 Next Steps。
 
 ## 更新本技能内容
 

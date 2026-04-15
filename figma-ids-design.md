@@ -307,6 +307,50 @@ If a visual issue exists but cannot be reliably fixed without user input (e.g., 
 
 ---
 
+### Phase 2.9: Design Rationale Page (Multi-Page Projects)
+### 阶段二·九：设计说明页（多页面项目）
+
+When all pages for a PRD or multi-page project have been generated, proactively ask the user:
+
+> *"All [N] pages are complete. Would you like me to generate a Design Rationale page in the Figma file? It documents the product background, design decisions, and user journey — useful for handoff to developers and stakeholders."*
+
+If the user confirms (or explicitly requests a design rationale at any point), create a new Figma page named `Design Rationale` in the same file, containing a well-formatted long-form document.
+
+**When to trigger:**
+- All pages from a PRD / multi-page project are delivered
+- The user explicitly asks for a design rationale or design documentation
+
+**When to skip:**
+- Single-page generation — do not ask
+- The user declines or says "skip"
+
+**Required sections and what each must answer:**
+
+| Section | Core question it answers |
+|---------|------------------------|
+| **产品背景 (Product Background)** | What problem does this product solve? Why does it exist? What was the status quo before? |
+| **目标用户 (Target Users)** | Who uses this and what do they need? List roles + core scenarios. |
+| **页面设计思路 (Page-by-Page Design Rationale)** | For each page: What question does it answer for the user? Why this layout pattern over alternatives? What are the key design trade-offs? |
+| **全局设计决策 (Global Design Decisions)** | Why this design system / design language? What structural rules were applied and why? What principles guided information density, navigation, and interaction? |
+| **用户旅程 (User Journey)** | How do the pages connect? What is the complete operation loop? Are there any dead ends? |
+
+**Writing principles:**
+- Write from the designer's perspective — explain *why*, not *what*
+- Every layout choice should have a reason tied to a user scenario or cognitive principle
+- Use the product's real terminology — do not use placeholder terms
+- Ensure business context accuracy — verify domain-specific terms (team names, technical concepts) from the PRD rather than guessing
+
+**Format in Figma:**
+- Create an Auto Layout frame (suggested width: 1200px, vertical, 80px horizontal padding, 64px vertical padding, 48px section gap)
+- White background, Inter font family
+- Section titles: Inter Bold 22px, dark text (`#1D2129`)
+- Body text: Inter Regular 15px, secondary text (`#4E5969`), 170% line height
+- Subheadings: Inter Semi Bold 16px, dark text
+- Horizontal dividers between sections (`#E5E6EB`, 1px)
+- No images or screenshots — text-only document
+
+---
+
 ## Editing Existing Files
 ## 编辑已有 Figma 文件
 
