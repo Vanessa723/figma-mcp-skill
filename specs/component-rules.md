@@ -46,6 +46,25 @@ If a needed component does not exist in IDS: compose from IDS primitives first. 
 - No external icon libraries (Material, Heroicons, Feather, etc.)
 - Icon sizes: 12 / 16 / 20 / 24px only
 
+### Icon stroke (outer + inner) | 图标外描边与内描边
+
+When an icon uses **both** an outer stroke and an inner stroke (双线 / 双描边):
+
+| Property | Outer stroke (外描边) | Inner stroke (内描边) |
+|----------|----------------------|------------------------|
+| **Weight** | **1** | **1** |
+| **Position** | **Center** | **Center** |
+
+**Visual rule:** The inner stroke must **not** read as protruding past the outer stroke’s silhouette (内描边在视觉上不得突破外描边轮廓).
+
+**Figma execution (same file / new icons):**
+
+1. **Stroke stack order** — In the strokes list, keep the **outer stroke entry below** the **inner stroke entry** (outer renders underneath, inner on top). That preserves the outer contour as the perceived outside edge and keeps the inner treatment visually contained.
+2. **Joins / caps** — Prefer **Round join** (and **Round cap** on open paths) so miters or square caps do not spike the inner stroke outside the outer stroke at corners or endpoints.
+3. **Geometry** — Use clean, merged vector paths (Outline stroke / boolean flatten when needed) so dual center strokes do not mis-register and expose the inner stroke beyond the outer ring.
+
+When generating or auditing icons via MCP, apply these values explicitly and flag any icon that violates the visual rule.
+
 ---
 
 ## Complete State Design | 完整状态设计
